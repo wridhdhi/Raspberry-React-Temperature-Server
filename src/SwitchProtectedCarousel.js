@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Carousel.css';
 
-const PasscodeModal = ({ targetNumber, onVerify, onCancel }) => {
+const PasscodeModal = ({apiUrl, targetNumber, onVerify, onCancel }) => {
   const [input, setInput] = useState('');
   const [error, setError] = useState('');
 
@@ -19,7 +19,7 @@ const PasscodeModal = ({ targetNumber, onVerify, onCancel }) => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://192.168.0.22:5000/verify-passcode', {
+      const response = await axios.post(`${apiUrl}/verify-passcode`, {
         passcode: input,
         number: targetNumber
       });
@@ -78,7 +78,7 @@ const PasscodeModal = ({ targetNumber, onVerify, onCancel }) => {
   );
 };
 
-const NumberProtectedCarousel = () => {
+const NumberProtectedCarousel = ({ apiUrl }) => {
   const [activeNumber, setActiveNumber] = useState(1);
   const [lastActiveNumber, setLastActiveNumber] = useState(1);
   const [showModal, setShowModal] = useState(false);
@@ -89,7 +89,7 @@ const NumberProtectedCarousel = () => {
   useEffect(() => {
     const fetchActiveNumber = async () => {
       try {
-        const response = await axios.get('http://192.168.0.22:5000/switch');
+        const response = await axios.get(`${apiUrl}/switch`);
         setActiveNumber(response.data.active_number);
         setLastActiveNumber(response.data.lastActiveNumber);
         setLoading(false);
@@ -100,7 +100,7 @@ const NumberProtectedCarousel = () => {
     };
 
     fetchActiveNumber();
-  }, []);
+  }, [apiUrl]);
 
   const handleNumberClick = (number) => {
     if (number !== activeNumber) {
@@ -111,7 +111,7 @@ const NumberProtectedCarousel = () => {
 
   const handleVerify = async () => {
     try {
-      await axios.post('http://192.168.0.22:5000/switch', { 
+      await axios.post(`${apiUrl}/switch`, { 
         number: targetNumber 
       });
       setLastActiveNumber(activeNumber);
@@ -138,11 +138,17 @@ const NumberProtectedCarousel = () => {
     };
   };
 
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
   return (
+    <>
     <div className="card carousel-card">
       <div className="card-content">
         <div className="carousel-header carousel-text">
-          <h2>Active Switch Position</h2>
+            <h1>1</h1>
+          <h2>Active Switch </h2>
           <div className="last-active">
             Last Position : {loading ? '--' : lastActiveNumber}
           </div>
@@ -175,15 +181,18 @@ const NumberProtectedCarousel = () => {
           )}
         </div>
         
-        {showModal && (
+        
+      </div>
+    </div>
+    {showModal && (
           <PasscodeModal
+            apiUrl={apiUrl}
             targetNumber={targetNumber}
             onVerify={handleVerify}
             onCancel={() => setShowModal(false)}
           />
         )}
-      </div>
-    </div>
+    </>
   );
 };
 

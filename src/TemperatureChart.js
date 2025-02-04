@@ -3,14 +3,14 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import axios from 'axios';
 import './ChartCard.css';
 
-const TemperatureChart = () => {
+const TemperatureChart = ({ apiUrl }) => {
   const [history, setHistory] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const response = await axios.get('http://192.168.0.22:5000/history');
+        const response = await axios.get(`${apiUrl}/history`);
         const formattedData = response.data.map(entry => ({
           time: new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           temp: entry.temperature_c
@@ -28,7 +28,7 @@ const TemperatureChart = () => {
     fetchHistory();
     const interval = setInterval(fetchHistory, 60000); // Update every 5-minute
     return () => clearInterval(interval);
-  }, []);
+  }, [apiUrl]);
 
   return (
     <div className="card chart-card">

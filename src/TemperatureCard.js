@@ -4,7 +4,7 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
 
-const TemperatureCard = () => {
+const TemperatureCard = ({ apiUrl }) => {
   const [temperature, setTemperature] = useState(null);
   const [temperatures, setTemperatures] = useState([]);
   const [averageTemp, setAverageTemp] = useState(null);
@@ -16,7 +16,7 @@ const TemperatureCard = () => {
   useEffect(() => {
     const fetchTemperature = async () => {
       try {
-        const response = await axios.get('http://192.168.0.22:5000/temperature');
+        const response = await axios.get(`${apiUrl}/temperature`);
         const temp = parseFloat(response.data.temperature_c);
         setTemperature(temp);
         setTemperatures(prevTemps => [...prevTemps, { value: temp, timestamp: Date.now() }]);
@@ -29,7 +29,7 @@ const TemperatureCard = () => {
     fetchTemperature();
     const interval = setInterval(fetchTemperature, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [apiUrl]);
 
   useEffect(() => {
     const calculateAverageTemp = () => {
@@ -46,7 +46,7 @@ const TemperatureCard = () => {
   }, [temperatures]);
 
   return (
-    <div className="card">
+    <div className="card temp-card">
       <div className="card-content">
         <div className="card-text">
           <h2>Live Temperature Sensor</h2>

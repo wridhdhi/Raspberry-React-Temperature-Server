@@ -23,14 +23,16 @@ h1 {
   background: white;
   border-radius: 15px;
   padding: 2.5rem;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  min-height: 300px;
+  /* box-shadow: 0 10px 20px rgba(0,0,0,0.1); */
+  min-height: 200px;
   transition: transform 0.2s;
 }
 
 .card:hover {
   transform: translateY(-5px);
 }
+
+
 
 .card-content {
   display: flex;

@@ -24,6 +24,13 @@
     font-size: 1.4rem;
   }
   
+  .carousel-text h1 {
+    text-align:left;
+    margin-left: 3rem; 
+    color: #0011ff;
+    margin-bottom: 0.25rem;
+    font-size: 5rem;
+  }
   
   .dial-ring {
     position: absolute;
