@@ -16,7 +16,8 @@ const TemperatureChart = () => {
           temp: entry.temperature_c
         }));
         
-        setHistory(formattedData);
+        const filteredData = formattedData.filter((_, index) => index % 5 === 0);
+        setHistory(filteredData); // Display every 5th item
         console.log(formattedData);
         setError(null);
       } catch (err) {
@@ -25,7 +26,7 @@ const TemperatureChart = () => {
     };
 
     fetchHistory();
-    const interval = setInterval(fetchHistory, 60000); // Update every minute
+    const interval = setInterval(fetchHistory, 60000); // Update every 5-minute
     return () => clearInterval(interval);
   }, []);
 
@@ -33,7 +34,7 @@ const TemperatureChart = () => {
     <div className="card chart-card">
       <div className="card-content">
         <h2>Temperature History</h2>
-        <p className="chart-subtitle">Last 15 Minutes</p>
+        <p className="chart-subtitle">Last 60 Minutes</p>
         {error && <div className="error">{error}</div>}
         
         <div className="chart-container">
