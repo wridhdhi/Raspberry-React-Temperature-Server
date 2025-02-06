@@ -1,0 +1,225 @@
+
+:root {
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --border-color: #dddddd;
+    --success-color: #2ecc71;
+    --error-color: #e74c3c;   }
+
+
+
+
+
+
+
+
+
+
+
+
+.switchid-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .switchid-modal {
+    background: var(--card-bg);
+    border-radius: 12px;
+    width: 400px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    color: var(--text-color);
+  }
+  
+  .switchid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .switchid-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+  
+  .switchid-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 0 0.5rem;
+  }
+  
+  .switchid-content {
+    padding: 1.5rem;
+  }
+  
+  .switchid-input {
+    width: 90%;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: border-color 0.3s ease;
+  }
+  
+  .switchid-input:focus {
+    outline: none;
+    border-color: var(--success-color);
+  }
+  
+  .switchid-error {
+    color: var(--error-color);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+  
+  .switchid-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+  }
+  
+  .switchid-button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .switchid-button.confirm {
+    background: var(--success-color);
+    color: white;
+  }
+  
+  .switchid-button.confirm:hover {
+    filter: brightness(1.1);
+  }
+  
+  .switchid-button.cancel {
+    background: var(--error-color);
+    color: white;
+  }
+  
+  .switchid-button.cancel:hover {
+    filter: brightness(1.1);
+  }
+  
+  @media (max-width: 480px) {
+    .switchid-modal {
+      width: 90%;
+      margin: 0 auto;
+    }
+    
+    .switchid-actions {
+      flex-direction: column;
+    }
+    
+    .switchid-button {
+      width: 100%;
+    }
+  }
+
+.switch-popup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.switch-popup-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.switch-popup-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.switch-popup-input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.switch-popup-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.switch-popup-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.switch-popup-button.cancel {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.switch-popup-button.confirm {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .switch-popup {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .switch-popup-header {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+
+  .switch-popup-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+  }
+
+  .switch-popup-actions {
+    flex-direction: column;
+  }
+
+  .switch-popup-button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .switch-popup-button:last-child {
+    margin-bottom: 0;
+  }
+}

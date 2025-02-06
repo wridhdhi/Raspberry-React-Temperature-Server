@@ -1,7 +1,9 @@
 // NumberCarousel.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import SwitchIdPopup from './SwitchPopup';
 import './Carousel.css';
+import './SwitchPopup.css'; // Add this line
 
 const PasscodeModal = ({apiUrl, targetNumber, onVerify, onCancel }) => {
   const [input, setInput] = useState('');
@@ -85,11 +87,15 @@ const NumberProtectedCarousel = ({ apiUrl }) => {
   const [targetNumber, setTargetNumber] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  //added later
+  const [showIdPopup, setShowIdPopup] = useState(false);
+  const [switchId, setSwitchId] = useState(1);
 
   useEffect(() => {
     const fetchActiveNumber = async () => {
       try {
         const response = await axios.get(`${apiUrl}/switch`);
+        setSwitchId(response.data.switch_id);
         setActiveNumber(response.data.active_number);
         setLastActiveNumber(response.data.lastActiveNumber);
         setLoading(false);
@@ -112,6 +118,7 @@ const NumberProtectedCarousel = ({ apiUrl }) => {
   const handleVerify = async () => {
     try {
       await axios.post(`${apiUrl}/switch`, { 
+        switch_id: switchId,
         number: targetNumber 
       });
       setLastActiveNumber(activeNumber);
@@ -121,6 +128,12 @@ const NumberProtectedCarousel = ({ apiUrl }) => {
       setError('Failed to update active number');
       setShowModal(false);
     }
+  };
+
+  const handleSwitchIdChange = (newId) => {
+    setSwitchId(newId);
+    setShowIdPopup(false);
+    // Add logic here to refresh data if needed
   };
 
     
@@ -147,7 +160,12 @@ const NumberProtectedCarousel = ({ apiUrl }) => {
     <div className="card carousel-card">
       <div className="card-content">
         <div className="carousel-header carousel-text">
-            <h1>1</h1>
+          <h1
+            className="switch-id-button"
+            onClick={() => setShowIdPopup(true)}
+          >
+            {switchId}
+          </h1>
           <h2>Active Switch </h2>
           <div className="last-active">
             Last Position : {loading ? '--' : lastActiveNumber}
@@ -192,6 +210,14 @@ const NumberProtectedCarousel = ({ apiUrl }) => {
             onCancel={() => setShowModal(false)}
           />
         )}
+      
+      {showIdPopup && (
+        <SwitchIdPopup
+          currentId={switchId}
+          onConfirm={handleSwitchIdChange}
+          onCancel={() => setShowIdPopup(false)}
+        />
+      )}
     </>
   );
 };
