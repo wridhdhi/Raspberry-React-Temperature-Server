@@ -7,11 +7,19 @@ import NumberProtectedCarousel from './SwitchProtectedCarousel';
 import CardConfigDialog from './CardConfigDialog';
 import './CardManager.css';
 
-const CardManager = ({ card, canRemove, onRemove, onUpdate }) => {
+const CardManager = ({ card, onUpdate, onRemove, canRemove }) => {
   const [showConfig, setShowConfig] = useState(false);
 
+  // When updating card config
   const handleConfigSubmit = (config) => {
-    onUpdate({ ...card, ...config, configured: true });
+    const updatedCard = { 
+      ...card, 
+      ...config, 
+      configured: true,
+      // Store timestamp for potential cache invalidation
+      lastUpdated: new Date().toISOString()
+    };
+    onUpdate(updatedCard);
     setShowConfig(false);
   };
 

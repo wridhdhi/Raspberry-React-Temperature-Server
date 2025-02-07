@@ -1,15 +1,32 @@
 // Updated App.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { loadConfig, saveConfig ,validateCache} from './services/configService';
 import CardManager from './CardManager';
 import './App.css';
 
+// Initial state with default cards
+const INITIAL_CARDS = [
+  { id: 1, configured: true, type: 'temperature', apiIp: '10.22.197.212' },
+  { id: 2, configured: true, type: 'chart', apiIp: '192.168.1.100' },
+  { id: 3, configured: true, type: 'carousel', apiIp: '192.168.1.100' },
+  { id: 4, configured: false }
+];
+
+
+
+
 const App = () => {
-  const [cards, setCards] = useState([
-    { id: 1, configured: true, type: 'temperature', apiIp: '192.168.1.100' },
-    { id: 2, configured: true, type: 'chart', apiIp: '192.168.1.100' },
-    { id: 3, configured: true, type: 'carousel', apiIp: '192.168.1.100' },
-    { id: 4, configured: false }
-  ]);
+  const [cards, setCards] = useState(() => {
+    const savedConfig = loadConfig();
+    const validatedCards = validateCache(savedConfig?.cards || INITIAL_CARDS);
+    return validatedCards.length > 0 ? validatedCards : INITIAL_CARDS;
+  });
+
+    // Save to localStorage whenever cards change
+    useEffect(() => {
+      saveConfig({ cards });
+    }, [cards]);
+  
 
   const handleUpdateCard = (updatedCard) => {
     setCards(cards.map(card => 
