@@ -7,8 +7,8 @@ import './App.css';
 // Initial state with default cards
 const INITIAL_CARDS = [
   { id: 1, configured: true, type: 'temperature', apiIp: '10.22.197.212' },
-  { id: 2, configured: true, type: 'chart', apiIp: '192.168.1.100' },
-  { id: 3, configured: true, type: 'carousel', apiIp: '192.168.1.100' },
+  { id: 2, configured: true, type: 'chart', apiIp: '10.22.197.212' },
+  { id: 3, configured: true, type: 'carousel', apiIp: '10.22.197.212' },
   { id: 4, configured: false }
 ];
 

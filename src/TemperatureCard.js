@@ -10,8 +10,8 @@ const TemperatureCard = ({ apiUrl }) => {
   const [averageTemp, setAverageTemp] = useState(null);
   const [error, setError] = useState(null);
 
-  const calculateProgress = (temp) => ((temp + 10) / 110) * 100;
-  const getColor = (temp) => temp > 30 ? '#ffc400' : temp >= 19 ? '#00ff40' : '#ff0000';
+  const calculateProgress = (temp) => ((temp ) / 25) * 100;
+  const getColor = (temp) => temp > 18 ?'#ff0000' : temp >= 13 ?'#ffc400' :'#00ff40';
 
   useEffect(() => {
     const fetchTemperature = async () => {

@@ -71,3 +71,7 @@ To get started with the project, clone the repository and install the dependenci
 git clone https://github.com/yourusername/rpi_temperature_app.git
 cd rpi_temperature_app
 npm install
+```
+
+## notes
+the `chilled-water` folder contains `server` as `api` and `build` in it.

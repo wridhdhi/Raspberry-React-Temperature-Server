@@ -8,7 +8,7 @@ import csv
 import threading
 from apscheduler.schedulers.background import BackgroundScheduler
 
-app = Flask(__name__,static_folder='../build', static_url_path='/')
+app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = False #for debugging
 CORS(app)
 # Global variables for thread-safe temperature sharing
@@ -190,16 +190,16 @@ def verify_passcode():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve_react(path):
-
+    static_folder = '../build'
     print(f"Requested path: {path}")
-    print(f"Static folder: {app.static_folder}")
-    if path.startswith('static/'):
-        # Serve static files from the /build/static directory
-        return send_from_directory(app.static_folder + '/static', path.split('static/', 1)[1])
+    print(f"Static folder: {static_folder}")
+    if path != "" and os.path.exists(os.path.join(static_folder, path)):
+        print(f"Serving file: {os.path.join(static_folder, path)}")
+        return send_from_directory(static_folder, path)
         
     else:
-        print(f"Serving index.html from: {app.static_folder}")
-        return send_from_directory(app.static_folder, 'index.html')
+        print(f"Serving index.html from: {static_folder}")
+        return send_from_directory(static_folder, 'index.html')
 
 
 if __name__ == '__main__':
